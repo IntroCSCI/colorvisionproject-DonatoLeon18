@@ -40,26 +40,40 @@ int main()
     else:error
     if:size of string is incorrect then error
     */
-      if(c==0){
+      if(n!=7)
+      {error=1;}
+
+    else if(c==0){
+
     for(int i = c+1; i < n; i++) {
     
         char ch = basecolor[i];  //stores each character of string as a char
 //use stored characters in for loop to test for invalid characters
  if ((ch < '0' || ch > '9') && (ch < 'a' || ch > 'f')){
-cout<<CLEAR_SCREEN<<"invalid characters"<<endl;
-error+=1;
-break;
-            }
+
+error=2;
+break;}
          }
     }
+
+    else if(c!=0){
+    error=3;}
+
     
-    else{cout<<CLEAR_SCREEN<<" # missing or misplaced\n";
-    error+=3;
+    switch(error){
+      case 1:
+       cout<<CLEAR_SCREEN<<"incorrect amount of characters"<<endl;
+       break;
+       
+       case 2:
+       cout<<CLEAR_SCREEN<<"invalid characters"<<endl;
+       break;
+
+       case 3:
+       cout<<CLEAR_SCREEN<<" # missing or misplaced\n";
+       break;
     }
-    //check for correct string size
-    if(n!=7){error+=4;
-    cout<<CLEAR_SCREEN<<"incorrect amount of characters"<<endl;
-    }
+
     
      cin.ignore();
     }while(error>0);
@@ -82,8 +96,9 @@ string result;
 cout<<"\n"<<"succesfully printed to file: ";
  while(!reader.eof()){
 getline(reader,result);
-cout<<result;
+cout<<result<<endl;
  }
 reader.close();
+
   return 0;
 }
