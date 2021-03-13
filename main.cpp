@@ -6,8 +6,6 @@ using namespace std;
 fstream reader;
 string filename="";
 string basecolor="";
-string s;
-size_t hex;
 int c;
 int n;
 char ch;
@@ -34,12 +32,13 @@ int main()
     n = basecolor.length();
     //look for # and record its position
     c= basecolor.find("#");
-    
-    //check to se if hexadecimal has correct format
-    /* if: there is # and its in the correct position then check if each character is 0-9 or a lowercase letter a-f
-    else:error
-    if:size of string is incorrect then error
-    */
+
+    /*checks for correct size of the user input first
+    checks for correct position of # second
+    checks for valid characters third
+    if any checks discover an issue then error is assigned a certain value based on the issue
+     */
+
       if(n!=7)
       {error=1;}
 
@@ -59,6 +58,8 @@ break;}
     else if(c!=0){
     error=3;}
 
+/* switch case checks for error value to decide which error message is printed
+*/
     
     switch(error){
       case 1:
