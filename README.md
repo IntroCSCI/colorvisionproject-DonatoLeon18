@@ -6,7 +6,7 @@
 
 ### v0.2 Updates
 
-*Coming soon*
+creates color pallete based off input color
 
 ### v1.0 Updates
 
@@ -32,26 +32,53 @@ Here is an example of the program running:
 1.user inputs a 6 decimal hexadecimal value with a #
    ex:#xxxxxx
 2. program checks for every combination of error
-3.user inputs file to copy hexadecimal value to
-4.program prints to css file in the correct format
+3.program prints out the rgb color value of the user input
+   ex:
+      RGB value is: xx, xx, xx,
+4.program prints out characteristics of the color
+   ex: "color is blue dominant"
+5.program prints out the generated Theme
+   ex: 
+      #xxxxxx
+      #xxxxxx
+      #xxxxxx
+      #xxxxxx
+      #xxxxxx
+      #xxxxxx
+6.program asks the user if they wish to  keep or discard generated theme.
+7. program propmts user to choose  to either create another theme or quit
 
 ```
 
 ## C++ Guide
 
 ### Variables and Data Types
-strings used for user input
+string 
+this variable type is like an array of characters put together as a single object
+
+this program mainly uses them to keep track of user Decisions
+
 ex:
 string basecolor(takes hexidecimal )
 string filename(takes filename)
+string cont(takes user decision)
 
-integers used to check or mark errors in the users format by comparing size of the input and position of the #
+int
+this variable type is used to store whole numbers which can have a range of uses. 
+
+this program uses these variables for different operations which range from recording the size of a string, vector, or array to recording the position of a character within a string or keeping track of errors detected in a user input.
+
 ex:
-int c (records position of the # in a string)
-int n (records the size of the string)
+int position (records position of the # in a string)
+
 int error (given a value based on the error type so the program knows which message to print out)
 
-characters used to compare each number and letter in a string following a # to chech for invalid numbers or symbols
+char
+this type of variable is used to hold a single character
+
+for this program they are used to for things such as
+comparing characters of eachother or breaking up a hex number to be converted to rgb value
+
 ex:
 char ch (checks the string uses only numbers 0-9 and lowercase letters a-f)
 
@@ -80,11 +107,30 @@ program takes in the file name entered by user and opens the entered file. if th
 
 ### Arrays/Vectors
 
-*Coming in version 0.2*
+Arrays keep a static size that cannot be increased or decreased when defined. arrays in this program are used for storing components of an RGB or Hexadecimal color value. these RGB and Hexadecimal components keep a consistent format which makes using arrays an effective option.
+
+Vectors can be defined with with things stored inside them but unlike an array it can increase or decrease as much as it needs to throughout the program which made it a great choice for storing the generated list of colors in the program because the user is given an option to delete palletes or generate as many as they want so its important to use a vector in this case as it can satisfy this these conditions
 
 ### Functions
+This program has 5 functions that serve their own unique functions
 
-*Coming in version 0.2*
+1. int checkHex(string);
+this function takes in a hexadecimal number asa string and checks its format to determine wether or not it is a 6 character hexadecimal with lowercase letters. the string is passed by value so the original string stays the same. the function returns an int value that tells us the type of error that has been found
+
+2. int convertHex(char b[]);
+this function takes in an array of two characters from a hexadecimal to convert it into its decimal form. the array is oassed by value and the function returns the decimal value as an integer.
+
+3. string convertDec(int n);
+this function converts a decimal value into a two character hexadecimal. it takes in a integer value and returns a string.
+the integer is passed by value so the original variable is left unchanged by the function
+
+this function does not appear in int main but appears in our next function
+
+4. string convertRGB(int R, int G, int B);
+this function takes components of an RGB color value and converts it back into a 6 character Hexadecimal color value. it takes in the RGB components as integers and returns our hexadecimal as a string
+
+5. void generateColors(int& r, int& g, int& b);
+this function takes in RGB components as integers and either increases or decreased each component by certain values to creat new colors. this fuction is differetn from the rst because it does not return anything but affects our paraneters as they are passed by reference meaning the origina copies of the variable are changed.
 
 ### Classes
 
