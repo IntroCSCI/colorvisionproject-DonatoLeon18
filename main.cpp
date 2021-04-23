@@ -21,6 +21,7 @@ char ch;//hex characters
 char splitHex[2];//array to store hex values for red blue green individually 
 int cont;
 vector <string> theme;
+
 int main()
 
 {
