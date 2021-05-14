@@ -46,6 +46,7 @@ Here is an example of the program running:
       #xxxxxx
       #xxxxxx
 6.program asks the user if they wish to  keep or discard generated theme.
+
 7. program propmts user to choose  to either create another theme or quit
 
 theme.css already comes with a list of colors best suited for people with protanopia colorblindness originating from the hex colors #eeffdd and #ffeedd
