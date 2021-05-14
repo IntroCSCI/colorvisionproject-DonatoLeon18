@@ -3,52 +3,55 @@
 #include <fstream>
 #include<string.h>
 #include <vector>
+#include "color.h"
 using namespace std;
+
+int checkHex(string);
+//int convertHex(char b[]);
+//string convertDec(int n);
+//string convertRGB(int R, int G, int B);
+void generateColors(int& r, int& g, int& b);
+
+int main()
+{
+color Color;
 fstream reader;
 string filename="";
 string basecolor="";
-
 const string CLEAR_SCREEN = u8"\033[2J\033[1;1H";
 int error=0;
-int checkHex(string);
-int convertHex(char b[]);
-string convertDec(int n);
-string convertRGB(int R, int G, int B);
-void generateColors(int& r, int& g, int& b);
 int RGB[3];//array for storing rgb color value
 int position;
 char ch;//hex characters
 char splitHex[2];//array to store hex values for red blue green individually 
 int cont;
+int R,G,B;
 vector <string> theme;
-
-int main()
-
-{
-
+cout<<Color.red();
   do{
-    //clears screen and vector data if any
-    cout<<CLEAR_SCREEN;
-    if(theme.size()>0)
-    {
+      //clears screen and vector data if any
+     cout<<CLEAR_SCREEN;
+    
+      if(theme.size()>0)
+      {
       theme.clear();
-    }
+      }
 
-  do{
+     do{
      
-    //ask user for Hexadecimal
-    cout<<"input 6 character Hexadecimal\n";
-    cout<<"include #\n";
-    cout<<"use lowercase letters a-f\n";
-    cout<<"EX:#xxxxxx\n";
+      //ask user for Hexadecimal
+     cout<<"input 6 character Hexadecimal\n";
+     cout<<"include #\n";
+     cout<<"use lowercase letters a-f\n";
+     cout<<"EX:#xxxxxx\n";
 
-  cin>>basecolor;
-
-
-error=checkHex(basecolor); //check for correct format of hexadecimal
+     cin>>basecolor;
 
 
-    //print error message depending on the detected error
+     error=checkHex(basecolor); //check for correct format of hexadecimal
+
+
+     //print error message depending on the detected error
      switch(error)
      {
       case 1:
@@ -67,71 +70,29 @@ error=checkHex(basecolor); //check for correct format of hexadecimal
     }while(error>0);
 
 theme.push_back(basecolor);
-//confirms cirrect input
+//confirms correct input
 cout<<CLEAR_SCREEN<<"correct input\n"<<basecolor<<endl;
-
+string hold[3];
+int counter=0;
    //breaks apart hex number into its RGB components and converts those components into decimal values
-    position= basecolor.find("#");
-for(int i = position+1; i < 3; i++)
-{
-  ch = basecolor[i];  
-    if ((ch >= '0' || ch <= '9') && (ch >= 'a' || ch <= 'f'))
-  {
-    splitHex[i-1]=ch;
-  }
-}
-   RGB[0]=convertHex(splitHex);  
-
-for(int i = position+3; i < 5; i++) 
-{
-  ch = basecolor[i];  
-  if ((ch >= '0' || ch <= '9') && (ch >= 'a' || ch <= 'f'))
-  {
-    splitHex[i-3]=ch;
-  }
-}
-   RGB[1]=convertHex(splitHex);   
-
-for(int i = position+5; i < 7; i++) 
-{
-  ch = basecolor[i];  
-  if ((ch >= '0' || ch <= '9') && (ch >= 'a' || ch <= 'f'))
-  {
-    splitHex[i-5]=ch;
-
-  }
-}
-   RGB[2]=convertHex(splitHex); 
+  Color.set(basecolor);
+ 
 
 cout<<"RGB value is: ";
-
-  for(int i=0;i<3;i++)
-  {
-    cout<<RGB[i]<<", ";
-  } 
-   cout<<endl;
+     R=Color.red();
+     G=Color.green();
+     B=Color.blue();
+  cout<< R<<", "<<G<<", "<<B<<endl;
 
    //checks for properties of color
-  if(RGB[0]>RGB[1]&&RGB[0]>RGB[2])
-  {
-   cout<<"color is red dominant\n";
-  } 
-  else if(RGB[1]>RGB[0]&&RGB[1]>RGB[2])
-  {
-    cout<<"color is green dominant\n";
-  } 
-  else if(RGB[2]>RGB[0]&&RGB[2]>RGB[1])
-  { 
-    cout<<"color is blue dominant\n";
-  }
-  else if(RGB[0]==RGB[1]&&RGB[1]==RGB[2])
-  {
-    cout<<"color is apart of greyscale\n";
-  } 
-  if(RGB[0]==RGB[1]||RGB[1]==RGB[2]||RGB[0]==RGB[2])
-  {
-    cout<<"the color is blended\n";
-  }
+   if(Color.properties()=="grey"||Color.properties()=="blended"){
+     cout<<"color is "<<Color.properties()<<endl;
+   }
+   else
+   {
+     cout<<"color is "<<Color.properties()<<" Dominant"<<endl;
+   }
+ 
 
    //generates new colors from inputed color
    cout<<"new colors to complete theme:"<<endl;
@@ -139,11 +100,12 @@ cout<<"RGB value is: ";
 for(int i=0;i<5;i++)
   {
    //changes color into new ones
-   generateColors(RGB[0],RGB[1],RGB[2]);
+   generateColors(R,G,B);
 
    //converts alternate color's RGB value back into hex
-   basecolor=convertRGB(RGB[0],RGB[1],RGB[2]);
-   theme.push_back(basecolor);
+   Color.value(R, G, B);
+   theme.push_back(Color.hexcode());
+   
   }
 
    //displays the colors that have been generated 
@@ -249,111 +211,33 @@ int checkHex(string hex)
     return error;
 }
 
-//function thatconverts hexadecimal value into decimal value
-int convertHex(char red[])
-{
- int len = strlen(red);
-   int base = 1;
-   int temp = 0;
-   for (int i=len-1; i>=0; i--) 
-   {
-      if (red[i]>='0' && red[i]<='9') 
-      {
-         temp += (red[i] - 48)*base;
-         base = base * 16;
-      }
-      else if (red[i]>='a' && red[i]<='f') 
-      {
-         temp += (red[i] - 87)*base;
-         base = base*16;
-      }
-   }return temp;
-} 
 
-//function that converts decimal to hexadecimal
-string convertDec(int n)
-{
-  string hexadecimal;
-  char hex[2];
- int count=0;
- while(n!=0)
- {
-   int temp=0;
-   temp=n%16;
-   
-   if(temp<10)
-   {
-     hex[count]= temp+ 48;
-     count++;
-   } 
-   else
-   {
-     hex[count]=temp+87;
-     count++;
-   }
-   n=n/16;
- }
-  hexadecimal="";
- if(count==2)
- {
-   hexadecimal.push_back(hex[1]);
-   hexadecimal.push_back(hex[0]);
- }
- else if(count==1)
- {
-   hexadecimal="0";
-   hexadecimal.push_back(hex[0]);
- }
- else if(count==0)
- {
-   hexadecimal="00";
- }
- return hexadecimal;
-}
 
-//function that converts RGB color value to hexadecimal color format
-string convertRGB(int R, int G, int B)
-{
-  string hexCode;
-  if ((R>=0&&R<=255)&&(G>=0&&G<=255)&&(B>=0&&B<=255)) 
-  {
-  
-    hexCode = "#";
-    hexCode += convertDec(R);
-    hexCode += convertDec(G);
-    hexCode += convertDec(B);
-  }
-
- return hexCode;
-}
 void generateColors(int& r, int& g, int& b)
 {
-  if(RGB[0]<225&&RGB[0]>30)
+  
+  if(r<215&&r>40)
   {
-     RGB[0]-=30;
+     r-=40;
   }
-  else if(RGB[0]==255||RGB[0]>235||RGB[0]==235)
-  {
-     RGB[0]-=20;
-   }
-   if(RGB[1]<225)
+  else if(r==255||r>215||r==215)
    {
-     RGB[1]+=30;
+     r-=40;
    }
-   else if(RGB[1]==255||RGB[1]>235||RGB[1]==235)
+   if(g<225&&g>30)
    {
-     RGB[1]-=40;
+     g-=30;
    }
-   if(RGB[2]<225)
+   else if(g==255||g>215||g==215)
    {
-     RGB[2]+=30;
+     g-=40;
    }
-   else if(RGB[2]==255||RGB[2]>235||RGB[2]==235)
+   if(b<215)
    {
-     RGB[2]-=40;
+     b+=40;
+   }
+   else if(b==255||b>235||b==235)
+   {
+     b-=20;
    }
 }
- 
-
-
-         

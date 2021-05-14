@@ -1,8 +1,8 @@
-# !!!Donato Leon!!!
+# Donato Leon
 
 Theme completer
 
-!!!!!!
+
 
 ### v0.2 Updates
 
@@ -10,12 +10,12 @@ creates color pallete based off input color
 
 ### v1.0 Updates
 
-*Coming soon*
+creates a color pallete suitable for red and green color weakness
 
 
 ## Developer
 
-!!!Donato Leon!!!
+Donato Leon
 
 ## Example
 
@@ -47,6 +47,8 @@ Here is an example of the program running:
       #xxxxxx
 6.program asks the user if they wish to  keep or discard generated theme.
 7. program propmts user to choose  to either create another theme or quit
+
+theme.css already comes with a list of colors best suited for people with protanopia colorblindness originating from the hex colors #eeffdd and #ffeedd
 
 ```
 
@@ -134,4 +136,4 @@ this function takes in RGB components as integers and either increases or decrea
 
 ### Classes
 
-*Coming in version 1.0*
+the color class was added to the algorithm to represent the user provided color as an object that held information such as its rgb value, hexadecimal value, and its characteristics as it relates to colorblindness( EX: if a color is red dominant)
