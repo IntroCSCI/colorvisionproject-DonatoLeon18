@@ -22,8 +22,13 @@ Donato Leon
 To run the program, give the following commands:
 
 ```
-g++ --std=c++11 *.cpp -o cvp
-./cvp
+1. enter hexadecimal
+
+2. decide wether wether to keep or delete the theme
+by pressing "1" to keep and pressing any key to delete
+
+3. decide wether to genreate another pallete
+by pressing "1" to keep and pressing any key to quit
 ```
 
 Here is an example of the program running:
